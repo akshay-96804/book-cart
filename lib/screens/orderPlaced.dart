@@ -47,6 +47,7 @@ class _PlacedOrderScreenState extends State<PlacedOrderScreen> {
                     int orderTotal = 0;
                     // = await Provider.of<OrderManage>(context, listen: false).getOrderTotal(snapshot.data.docs[index].id) ;
                     return ExpansionTile(
+                      
                       children: [
                         ListView.builder(
                             shrinkWrap: true,

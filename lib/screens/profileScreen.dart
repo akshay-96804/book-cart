@@ -59,202 +59,220 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+      body: Stack(
+        children: [ 
+          Container(
+                    height: MediaQuery.of(context).size.height,
+                    // alignment: Alignment.topCenter,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      image: DecorationImage(
+                        colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.8), BlendMode.dstATop),
+                        // alignment: Alignment.topCenter,
+                        fit: BoxFit.cover,
+                        image: AssetImage(
+                          "assets/images/books_background.jpg",
+                        ),
+                        // fit: BoxFit.cover,
+                      ),
+                    )),
+          Container(
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(12.0),
+                  alignment: Alignment.center,
+                  child: Text('BookCart',style: TextStyle(fontSize: 24.0,color: Colors.white),),
+                ),
+                //  Row(
+                //    mainAxisAlignment: MainAxisAlignment.center,
+                //    children: [
+                //      Container(
+                //        child: CircleAvatar(
+                //          radius: 35.0,
+                //        ),
+                //      ),
+                //      IconButton(
+                //        color: Colors.indigoAccent,
+                //        icon: Icon(Icons.edit), onPressed: (){})
+                //    ],
+                //  ),
+                 SizedBox(height: 20.0),
+                 Padding(
+                padding: EdgeInsets.only(left: 8.0),
+                child: Text(
+                  'Username',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+              SizedBox(
+                // height: 25.0,
+                height: MediaQuery.of(context).size.height * 0.012,
+              ),
               Container(
+                margin: EdgeInsets.only(left: 5.0,right: 5.0),
                 padding: EdgeInsets.all(12.0),
-                alignment: Alignment.center,
-                child: Text('BookCart',style: TextStyle(fontSize: 24.0),),
-              ),
-              //  Row(
-              //    mainAxisAlignment: MainAxisAlignment.center,
-              //    children: [
-              //      Container(
-              //        child: CircleAvatar(
-              //          radius: 35.0,
-              //        ),
-              //      ),
-              //      IconButton(
-              //        color: Colors.indigoAccent,
-              //        icon: Icon(Icons.edit), onPressed: (){})
-              //    ],
-              //  ),
-               SizedBox(height: 20.0),
-               Padding(
-              padding: EdgeInsets.only(left: 8.0),
-              child: Text(
-                'Username',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.0,
-                  decoration: TextDecoration.underline,
+                width: double.infinity,
+                child: Text(userNameDisplay,style: TextStyle(color: Colors.white),),
+                decoration: BoxDecoration(
+                  color: Color(0xFF128C7E),
+                  borderRadius: BorderRadius.circular(5.0)
                 ),
               ),
-            ),
-            SizedBox(
-              // height: 25.0,
-              height: MediaQuery.of(context).size.height * 0.012,
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 5.0,right: 5.0),
-              padding: EdgeInsets.all(12.0),
-              width: double.infinity,
-              child: Text(userNameDisplay,style: TextStyle(color: Colors.white),),
-              decoration: BoxDecoration(
-                color: Color(0xFF128C7E),
-                borderRadius: BorderRadius.circular(5.0)
+              SizedBox(
+                // height: 25.0,
+                height: MediaQuery.of(context).size.height * 0.012,
               ),
-            ),
-            SizedBox(
-              // height: 25.0,
-              height: MediaQuery.of(context).size.height * 0.012,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 8.0),
-              child: Text(
-                'Email-address',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.0,
-                  decoration: TextDecoration.underline,
+              Padding(
+                padding: EdgeInsets.only(left: 8.0),
+                child: Text(
+                  'Email-address',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                    decoration: TextDecoration.underline,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              // height: 25.0,
-              height: MediaQuery.of(context).size.height * 0.012,
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 5.0,right: 5.0),
-              padding: EdgeInsets.all(12.0),
-              width: double.infinity,
-              child: Text(emailaddress,style: TextStyle(color: Colors.white)),
-              decoration: BoxDecoration(
-                color: Color(0xFF128C7E),
-                borderRadius: BorderRadius.circular(5.0)
+              SizedBox(
+                // height: 25.0,
+                height: MediaQuery.of(context).size.height * 0.012,
               ),
-            ),
-            SizedBox(
-              // height: 25.0,
-              height: MediaQuery.of(context).size.height * 0.012,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 8.0),
-              child: Text(
-                'Graduating Year',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.0,
-                  decoration: TextDecoration.underline,
+              Container(
+                margin: EdgeInsets.only(left: 5.0,right: 5.0),
+                padding: EdgeInsets.all(12.0),
+                width: double.infinity,
+                child: Text(emailaddress,style: TextStyle(color: Colors.white)),
+                decoration: BoxDecoration(
+                  color: Color(0xFF128C7E),
+                  borderRadius: BorderRadius.circular(5.0)
                 ),
               ),
-            ),
-            SizedBox(
-              // height: 25.0,
-              height: MediaQuery.of(context).size.height * 0.012,
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 5.0,right: 5.0),
-              padding: EdgeInsets.all(12.0),
-              width: double.infinity,
-              child: Text(graduatingYear,style: TextStyle(color: Colors.white)),
-              decoration: BoxDecoration(
-                color: Color(0xFF128C7E),
-                borderRadius: BorderRadius.circular(5.0)
+              SizedBox(
+                // height: 25.0,
+                height: MediaQuery.of(context).size.height * 0.012,
               ),
-            ),
-            SizedBox(
-              // height: 25.0,
-              height: MediaQuery.of(context).size.height * 0.012,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 8.0),
-              child: Text(
-                'Contact No.',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.0,
-                  decoration: TextDecoration.underline,
+              Padding(
+                padding: EdgeInsets.only(left: 8.0),
+                child: Text(
+                  'Graduating Year',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                    decoration: TextDecoration.underline,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              // height: 25.0,
-              height: MediaQuery.of(context).size.height * 0.012,
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 5.0,right: 5.0),
-              padding: EdgeInsets.all(12.0),
-              width: double.infinity,
-              child: Text(contactNo,style: TextStyle(color: Colors.white)),
-              decoration: BoxDecoration(
-                color: Color(0xFF128C7E),
-                borderRadius: BorderRadius.circular(5.0)
+              SizedBox(
+                // height: 25.0,
+                height: MediaQuery.of(context).size.height * 0.012,
               ),
-            ),
-            SizedBox(
-              // height: 25.0,
-              height: MediaQuery.of(context).size.height * 0.012,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 8.0),
-              child: Text(
-                'State',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.0,
-                  decoration: TextDecoration.underline,
+              Container(
+                margin: EdgeInsets.only(left: 5.0,right: 5.0),
+                padding: EdgeInsets.all(12.0),
+                width: double.infinity,
+                child: Text(graduatingYear,style: TextStyle(color: Colors.white)),
+                decoration: BoxDecoration(
+                  color: Color(0xFF128C7E),
+                  borderRadius: BorderRadius.circular(5.0)
                 ),
               ),
-            ),
-            SizedBox(
-              // height: 25.0,
-              height: MediaQuery.of(context).size.height * 0.012,
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 5.0,right: 5.0),
-              padding: EdgeInsets.all(12.0),
-              width: double.infinity,
-              child: Text(stateName,style: TextStyle(color: Colors.white)),
-              decoration: BoxDecoration(
-                color: Color(0xFF128C7E),
-                borderRadius: BorderRadius.circular(5.0)
+              SizedBox(
+                // height: 25.0,
+                height: MediaQuery.of(context).size.height * 0.012,
               ),
-            ),
-            SizedBox(
-              // height: 25.0,
-              height: MediaQuery.of(context).size.height * 0.012,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 8.0),
-              child: Text(
-                'City',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.0,
-                  decoration: TextDecoration.underline,
+              Padding(
+                padding: EdgeInsets.only(left: 8.0),
+                child: Text(
+                  'Contact No.',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                    decoration: TextDecoration.underline,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              // height: 25.0,
-              height: MediaQuery.of(context).size.height * 0.012,
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 5.0,right: 5.0),
-              padding: EdgeInsets.all(12.0),
-              width: double.infinity,
-              child: Text(cityName,style: TextStyle(color: Colors.white)),
-              decoration: BoxDecoration(
-                color: Color(0xFF128C7E),
-                borderRadius: BorderRadius.circular(5.0)
+              SizedBox(
+                // height: 25.0,
+                height: MediaQuery.of(context).size.height * 0.012,
               ),
-            ),              
-            ],
+              Container(
+                margin: EdgeInsets.only(left: 5.0,right: 5.0),
+                padding: EdgeInsets.all(12.0),
+                width: double.infinity,
+                child: Text(contactNo,style: TextStyle(color: Colors.white)),
+                decoration: BoxDecoration(
+                  color: Color(0xFF128C7E),
+                  borderRadius: BorderRadius.circular(5.0)
+                ),
+              ),
+              SizedBox(
+                // height: 25.0,
+                height: MediaQuery.of(context).size.height * 0.012,
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 8.0),
+                child: Text(
+                  'State',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+              SizedBox(
+                // height: 25.0,
+                height: MediaQuery.of(context).size.height * 0.012,
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 5.0,right: 5.0),
+                padding: EdgeInsets.all(12.0),
+                width: double.infinity,
+                child: Text(stateName,style: TextStyle(color: Colors.white)),
+                decoration: BoxDecoration(
+                  color: Color(0xFF128C7E),
+                  borderRadius: BorderRadius.circular(5.0)
+                ),
+              ),
+              SizedBox(
+                // height: 25.0,
+                height: MediaQuery.of(context).size.height * 0.012,
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 8.0),
+                child: Text(
+                  'City',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+              SizedBox(
+                // height: 25.0,
+                height: MediaQuery.of(context).size.height * 0.012,
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 5.0,right: 5.0),
+                padding: EdgeInsets.all(12.0),
+                width: double.infinity,
+                child: Text(cityName,style: TextStyle(color: Colors.white)),
+                decoration: BoxDecoration(
+                  color: Color(0xFF128C7E),
+                  borderRadius: BorderRadius.circular(5.0)
+                ),
+              ),              
+              ],
+            ),
           ),
-        ),
+      ]),
     );
   }
 }

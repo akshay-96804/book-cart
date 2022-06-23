@@ -5,6 +5,7 @@ import 'package:book_rent_app/screens/bottom_nav.dart';
 import 'package:book_rent_app/screens/registerPage.dart';
 import 'package:book_rent_app/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -39,9 +40,23 @@ class _LoginPageState extends State<LoginPage> {
             style: TextStyle(color: Colors.black, fontSize: 30.0),
           ),
           centerTitle: true,
-          backgroundColor: Colors.transparent,
+          // backgroundColor: Colors.transparent,
           elevation: 0.0),
-      body: ModalProgressHUD(
+      body: Stack(
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height,
+        // alignment: Alignment.topCenter,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          image: DecorationImage(
+            // alignment: Alignment.topCenter,
+            fit: BoxFit.cover,
+            image: AssetImage("assets/images/books_background.jpg",),
+            // fit: BoxFit.cover,
+          ),
+        )),
+          ModalProgressHUD(
           inAsyncCall: _isloading,
           child: Padding(
             padding: const EdgeInsets.all(12.0),
@@ -55,12 +70,15 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   height: 25.0,
                 ),
+                //  Text("BookCart",
+                //       style: GoogleFonts.lato(color: Colors.black, fontSize: 30.0)),
                 // Spacer(),
                 Form(
                   key: _formKey,
                   child: Column(
                     children: [
                       TextFormField(
+                        
                         onChanged: (val) {
                           email = val;
                         },
@@ -69,12 +87,15 @@ class _LoginPageState extends State<LoginPage> {
                             : null,
                         // controller: emailController,
                         decoration: InputDecoration(
+                            
                             filled: true,
-                            fillColor: Colors.white54,
+                            fillColor: Colors.white70,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
-                            hintText: 'Enter Email Address'),
+                            hintText: 'Enter Email Address',
+                            // hintStyle: TextStyle(color: Colors.)
+                            ),
                       ),
                       SizedBox(height: 15.0),
                       TextFormField(
@@ -88,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                         // controller: passwordController,
                         decoration: InputDecoration(
                             filled: true,
-                            fillColor: Colors.white54,
+                            fillColor: Colors.white70,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
@@ -160,6 +181,8 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
           )),
+        ],
+      )
     );
   }
 }

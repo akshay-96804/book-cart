@@ -97,7 +97,10 @@ class _DemoHomePageState extends State<DemoHomePage> {
                                     children: [
                                       Row(
                                         children: [
-                                          CircleAvatar(),
+                                          CircleAvatar(
+                                            child: Icon(Icons.person),
+                                          ),
+                                          SizedBox(width: 10.0),
                                           Text(snapshot.data.docs[index]
                                               .data()['owner'])
                                         ],
