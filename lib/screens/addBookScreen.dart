@@ -1,3 +1,4 @@
+import 'package:book_rent_app/providers/authProvider.dart';
 import 'package:book_rent_app/services/crudMethods.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,6 +8,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:math';
 import 'dart:io';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:provider/provider.dart';
 
 enum BookStatus { ForSale, ForRent }
 
@@ -20,9 +22,9 @@ class _AddBookScreenState extends State<AddBookScreen> {
 
   BookStatus _status = BookStatus.ForSale;
 
-  String username = "";
-  String email = "";
-  String userUid = "" ;
+  // String username = "";
+  // String email = "";
+  // String userUid = "" ;
 
   TextEditingController bookName = TextEditingController();
   TextEditingController authorName = TextEditingController();
@@ -31,9 +33,11 @@ class _AddBookScreenState extends State<AddBookScreen> {
 
   String branch = "";
   String appYear = "";
+  String category = "";
 
   int _selectedYear = 0;
   int _selectedBranch = 0;
+  int _selectedCategory = 0;
 
   bool _isVisible = true;
   bool _spinner = false;
@@ -117,6 +121,29 @@ class _AddBookScreenState extends State<AddBookScreen> {
     ),
   ];
 
+  List<DropdownMenuItem> bookCategories = [
+    DropdownMenuItem(
+      child: Text('Select Category'),
+      value: 0,
+    ),
+    DropdownMenuItem(
+      child: Text('Programming Book'),
+      value: 1,
+    ),
+    DropdownMenuItem(
+      child: Text('Text-Book'),
+      value: 2,
+    ),
+    DropdownMenuItem(
+      child: Text('Novel'),
+      value: 3,
+    ),
+    DropdownMenuItem(
+      child: Text('Bio-Graphy'),
+      value: 4,
+    ),
+  ];
+
   List<String> allYears = [
     'dummy_data : dummy_data',
     '1st Year : 1st Semester',
@@ -135,6 +162,14 @@ class _AddBookScreenState extends State<AddBookScreen> {
     'Communication and Computer Engineering',
     'Electronics and Communication Engineering',
     'Mechanical Engineering'
+  ];
+
+  List<String> allCategories = [
+    'dummy-data',
+    'Programming',
+    'Course-Book'
+    'Novel',
+    'BioGraphy'
   ];
 
   // FirebaseStorage.instance
@@ -184,16 +219,16 @@ class _AddBookScreenState extends State<AddBookScreen> {
   Future<void> fetchData() async {
     await FirebaseFirestore.instance
         .collection('users')
-        .doc(FirebaseAuth.instance.currentUser.uid)
+        .doc(Provider.of<AuthProvider>(context,listen: false).getUserId)
         .get()
         .then((doc) {
       print('Fetching User Data');
 
-      setState(() {
-        username = doc.data()['username'];
-        email = doc.data()['useremail'];
-        userUid = FirebaseAuth.instance.currentUser.uid ;
-      });
+      // setState(() {
+      //   username = doc.data()['username'];
+      //   email = doc.data()['useremail'];
+      //   userUid = FirebaseAuth.instance.currentUser.uid ;
+      // });
     });
   }
 
@@ -205,8 +240,8 @@ class _AddBookScreenState extends State<AddBookScreen> {
 
   void _addBook() async {
     await _crudMethods
-        .addBooks(userUid,username, email, bookImage, branch, bookName.text,
-            courseName.text, authorName.text, bookDesc.text,appYear,_price)
+        .addBooks(Provider.of<AuthProvider>(context,listen: false).getUserId,Provider.of<AuthProvider>(context,listen: false).getUserName, Provider.of<AuthProvider>(context,listen: false).getUserEmail, bookImage, branch, bookName.text,
+            courseName.text, authorName.text, bookDesc.text,category,appYear,_price)
         .whenComplete(() {
       bookImage = defaultBookImage;
       imageStatus = "";
@@ -217,6 +252,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
       _price = 0 ;
       _selectedYear = 0;
       _selectedBranch = 0;
+      _selectedCategory = 0;
       _uploading = false;
 
       setState(() {
@@ -353,6 +389,20 @@ class _AddBookScreenState extends State<AddBookScreen> {
                               ? 'Description should be more long. '
                               : null,
                         ),
+                        SizedBox(height: 10.0),
+                        DropdownButtonFormField(
+                            value: _selectedCategory,
+                            onChanged: (val) {
+                              // print(val);
+                              setState(() {
+                                _selectedCategory = val;
+                                category = allCategories[_selectedCategory];
+                              });
+
+                              // print(category);
+                            },
+                            items: bookCategories
+                            ),
                         SizedBox(height: 10.0),
                         DropdownButtonFormField(
                             value: _selectedYear,

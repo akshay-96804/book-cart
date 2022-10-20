@@ -1,5 +1,6 @@
 // import 'package:book_cart_app/screens/authentication.dart';
 // import 'package:book_cart_app/screens/loginPage.dart';
+import 'package:book_rent_app/providers/authProvider.dart';
 import 'package:book_rent_app/screens/bottom_nav.dart';
 import 'package:book_rent_app/screens/loginPage.dart';
 import 'package:book_rent_app/services/auth.dart';
@@ -8,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -21,6 +23,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final _formKey = GlobalKey<FormState>();
   AuthService _authService = AuthService();
+
+  AuthProvider _authProvider = AuthProvider();
 
   String username = '';
   String email = '';
@@ -206,27 +210,18 @@ class _RegisterPageState extends State<RegisterPage> {
                           _isLoading = true;
                         });
                         
-                      dynamic result = await _authService
-                          .signUpWithEmailAndPassword(email, password);
-                      if (result == null) {
+                      String result = await Provider.of<AuthProvider>(context,listen: false).createUser(email, password); 
+                     
+                      if (result != "Success") {
                         setState(() {
-                          error = 'Please enter correct information';
+                          error = result;
+                          _isLoading = false;
                         });
                       } else {
                         print('All Correct');
-                        await FirebaseFirestore.instance
-                            .collection('users')
-                            .doc(FirebaseAuth.instance.currentUser.uid)
-                            .set({
-                          'useremail': email,
-                          'username': username,
-                          'contact_no': contactno,
-                          'year': year,
-                          'state' : state, 
-                          'city' : city
-                        });
+                        
+                        Provider.of<AuthProvider>(context,listen: false).storeUser(email, username, contactno, year, state, city);
                         print('User created Sucessfully.');
-
                         
                         Navigator.pushReplacement(
                             context,

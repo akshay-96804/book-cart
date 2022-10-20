@@ -1,8 +1,15 @@
+// import 'package:book_rent_app/screens/chatRoom.dart';
+import 'dart:math';
+
+import 'package:book_rent_app/providers/authProvider.dart';
+import 'package:book_rent_app/screens/messagesScreen.dart';
 import 'package:book_rent_app/services/cartOperations.dart';
 import 'package:book_rent_app/services/firebaseoperatons.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 class DemoBookDetail extends StatefulWidget {
@@ -37,6 +44,14 @@ class DemoBookDetail extends StatefulWidget {
 
 class _DemoBookDetailState extends State<DemoBookDetail> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  String chatRoomId = '' ;
+
+  String generateRandomString(int len) {
+  var r = Random();
+  const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  return List.generate(len, (index) => _chars[r.nextInt(_chars.length)]).join();
+}
 
   @override
   Widget build(BuildContext context) {
@@ -97,8 +112,7 @@ class _DemoBookDetailState extends State<DemoBookDetail> {
               ),
             ),
           ),
-          Expanded(
-            child: Padding(
+          Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -154,8 +168,45 @@ class _DemoBookDetailState extends State<DemoBookDetail> {
                   ),
                 ],
               ),
+            )
+          ,SizedBox(height: 25.0),
+          GestureDetector(
+            onTap: (){
+              chatRoomId = generateRandomString(12);
+
+              FirebaseFirestore.instance.collection('users').doc(Provider.of<AuthProvider>(context,listen: false).getUserId).collection('chats').doc(chatRoomId).set({
+                'reciever': widget.owner,
+                'sender':Provider.of<AuthProvider>(context,listen: false).getUserName,
+                'chatId':chatRoomId,
+                'person' : widget.ownerUid
+              });
+
+              FirebaseFirestore.instance.collection('users').doc(widget.ownerUid).collection('chats').doc(chatRoomId).set({
+                 'reciever': Provider.of<AuthProvider>(context,listen: false).getUserName,
+                'sender':widget.owner,
+                'chatId' :chatRoomId,
+                'person':Provider.of<AuthProvider>(context,listen: false).getUserId
+              });
+
+              Navigator.push(context, PageTransition(
+                child: ChatRoom(
+                  chatRoomId,
+                  widget.ownerUid
+                ),
+                type: PageTransitionType.rightToLeft
+              ));
+            },
+            child: Container(
+              padding: EdgeInsets.all(12.0),
+              decoration: BoxDecoration(
+                color: Colors.redAccent
+              ),
+              alignment: Alignment.center,
+              width: double.infinity*0.15,
+              margin: EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text('Contact Seller'),
             ),
-          )
+          ) 
         ],
       ),
       floatingActionButton: FloatingActionButton(

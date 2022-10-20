@@ -1,8 +1,10 @@
+import 'package:book_rent_app/providers/authProvider.dart';
 import 'package:book_rent_app/screens/editBookScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 
 class MyBookScreen extends StatefulWidget {
   // const MyBookScreen({ Key? key }) : super(key: key);
@@ -12,17 +14,10 @@ class MyBookScreen extends StatefulWidget {
 }
 
 class _MyBookScreenState extends State<MyBookScreen> {
-  String userEmail ; 
+  // String userEmail ; 
 
   CollectionReference _collectionReference =
       FirebaseFirestore.instance.collection('books');
-
-      @override
-      void initState() {
-        super.initState();
-        userEmail = FirebaseAuth.instance.currentUser.email;
-      }
-
    
 
   @override
@@ -37,7 +32,7 @@ class _MyBookScreenState extends State<MyBookScreen> {
             // int cnt = 0 ;
 
             for(int i=0;i<snapshot.data.size; i++){
-               if(snapshot.data.docs[i]['email'] == userEmail){
+               if(snapshot.data.docs[i]['email'] == Provider.of<AuthProvider>(context,listen: false).getUserEmail){
               //  cnt++ ; 
                flag = true ;
                break ;
@@ -49,7 +44,7 @@ class _MyBookScreenState extends State<MyBookScreen> {
              return flag ? ListView.builder(
                itemCount: snapshot.data.size,
                itemBuilder: (context,index){
-                 if(snapshot.data.docs[index]['email'] == userEmail){
+                 if(snapshot.data.docs[index]['email'] == Provider.of<AuthProvider>(context,listen: false).getUserEmail){
                    return bookTiles(
                     authorName: snapshot.data.docs[index]['author_name'],
                     bookImg: snapshot.data.docs[index]['bookImg'],

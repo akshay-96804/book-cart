@@ -1,13 +1,16 @@
 // import 'package:book_cart_app/screens/authentication.dart';
 // import 'package:book_cart_app/screens/registerPage.dart';
 import 'package:book_rent_app/models/userModel.dart';
+import 'package:book_rent_app/providers/authProvider.dart';
 import 'package:book_rent_app/screens/bottom_nav.dart';
 import 'package:book_rent_app/screens/registerPage.dart';
 import 'package:book_rent_app/services/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   // const LoginPage({ Key? key }) : super(key: key);
@@ -24,7 +27,8 @@ class _LoginPageState extends State<LoginPage> {
   String errpr = "";
   bool _isloading = false;
 
-  AuthService _authService = AuthService();
+  // AuthService _authService = AuthService();
+  AuthProvider _authProvider = AuthProvider();
 
   String email = "";
   String password = "";
@@ -99,6 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       SizedBox(height: 15.0),
                       TextFormField(
+                        obscureText: true,
                         onChanged: (val) {
                           password = val;
                         },
@@ -109,6 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                         // controller: passwordController,
                         decoration: InputDecoration(
                             filled: true,
+                          
                             fillColor: Colors.white70,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0),
@@ -144,13 +150,17 @@ class _LoginPageState extends State<LoginPage> {
                         _isloading = true;
                       });
 
-                      UserModel _userData = await _authService
-                          .signInWithEmailAndPassword(email, password);
-                      if (_userData == null) {
+                      String res = await Provider.of<AuthProvider>(context,listen: false).logInUser(email, password);
+
+                      // User _userData = await _authProvider.logInUser(email, password);
+                      
+                      if (res !="Success") {
+                        // print(res);
                         setState(() {
                           _isloading = false;
                           _isError = true ;
-                          errpr = "Invalid Credentials";
+
+                          errpr = res;
                         });
                       } else {
                         print("Sign in Successfully.");

@@ -48,52 +48,107 @@ class _OrderRecievedScreenState extends State<OrderRecievedScreen> {
                   itemCount: snapshot.data.docs.length,
                   itemBuilder: (context, index) {
                     return ExpansionTile(
-                        children: [
-                          Card(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
+                      
+                      childrenPadding: EdgeInsets.all(5.0),
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
-                                    height: 75.0,
-                                    width: 70.0,
-                                    // color: Colors.amberAccent,
+                                    height: 150.0,
+                                    width: MediaQuery.of(context).size.width*0.25,
                                     decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: NetworkImage(snapshot.data.docs[index]
-                                          .data()['book_img'])
-                                      )
+                                       color: Colors.redAccent,
+                                       image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(snapshot.data.docs[index].data()['book_img'])
+                                       )
                                     ),
+                                    child: Text(''),
                                   ),
-                                  SizedBox(width: 15.0),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text('Book Name :- '+ snapshot.data.docs[index]
-                                          .data()['book_name']),
-                                      Text('Author Name :- '+snapshot.data.docs[index]
-                                          .data()['author']),
-                                      Text('Seller Detail :- '+snapshot.data.docs[index]
-                                          .data()['buyer']),
-                                      Text("Total Amount is Rs. "+ snapshot.data.docs[index]
-                                          .data()['price']
-                                          .toString()),
-                                    ],
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text("Title :- "+snapshot.data.docs[index].data()['book_name']),
+                                        Text("Author :- "+ snapshot.data.docs[index].data()['author']),
+                                        SizedBox(
+                                          height: 15.0,
+                                        ),
+                                        Text("Buyer Details :- "+snapshot.data.docs[index].data()['buyer']),
+                                        Text("Order Total :-  Rs "+snapshot.data.docs[index].data()['price'].toString()),
+                                        SizedBox(
+                                          height: 35.0,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            IconButton(icon: Icon(Icons.call), onPressed: (){}),
+                                            IconButton(icon: Icon(Icons.location_on), onPressed: (){})
+                                          ],
+                                        )
+                                      ],
+                                    ),
                                   )
                                 ],
-                              ),
-                            ),
-                          )
-                        ],
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                        // children: [
+                        //   Card(
+                        //     child: Padding(
+                        //       padding: const EdgeInsets.all(8.0),
+                        //       child: Row(
+                        //         children: [
+                        //           Container(
+                        //             height: 75.0,
+                        //             width: 70.0,
+                        //             // color: Colors.amberAccent,
+                        //             decoration: BoxDecoration(
+                        //               image: DecorationImage(
+                        //                 image: NetworkImage(snapshot.data.docs[index]
+                        //                   .data()['book_img'])
+                        //               )
+                        //             ),
+                        //           ),
+                        //           SizedBox(width: 15.0),
+                        //           Column(
+                        //             crossAxisAlignment: CrossAxisAlignment.start,
+                        //             children: [
+                        //               Flexible(
+                        //                 child: Text('Book Name :- '+ snapshot.data.docs[index]
+                        //                     .data()['book_name']),
+                        //               ),
+                        //               Text('Author Name :- '+snapshot.data.docs[index]
+                        //                   .data()['author']),
+                        //               Flexible(
+                        //                 child: Text('Seller Detail :- '+snapshot.data.docs[index]
+                        //                     .data()['buyer']),
+                        //               ),
+                        //               Text("Total Amount is Rs. "+ snapshot.data.docs[index]
+                        //                   .data()['price']
+                        //                   .toString()),
+                        //             ],
+                        //           )
+                        //         ],
+                        //       ),
+                        //     ),
+                        //   )
+                        // ],
                         
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
+                        subtitle: Text(
                             // 'Order Total is Rs.  ${totalAmount}'
-                            'Order Recieved on  ${snapshot.data.docs[index].data()['date']}')
-                          ],
-                        ),
+                            'Order Recieved on  ${snapshot.data.docs[index].data()['date']}'),
                         title: Text("Order No. ${index + 1}"));
                   });
             } else {

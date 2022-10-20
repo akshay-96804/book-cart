@@ -15,6 +15,7 @@ class CrudMethods {
       String courseName,
       String authorName,
       String description,
+      String category,
       String year,
       double price
       ) 
@@ -30,7 +31,8 @@ class CrudMethods {
       'author_name': authorName,
       'year': year,
       'description' :description,
-      'price' : price
+      'price' : price,
+      'category': category
     });
   }
 }

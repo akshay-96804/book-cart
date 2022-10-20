@@ -1,6 +1,8 @@
+import 'package:book_rent_app/providers/authProvider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   // const ProfileScreen({ Key? key }) : super(key: key);
@@ -12,49 +14,6 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   CollectionReference _collectionReference =
       FirebaseFirestore.instance.collection('users');
-
-  String userNameDisplay = "Loading..";
-  String contactNo = "Loading..";
-  String emailaddress = "Loading.." ;
-  String graduatingYear = "Loading.." ;
-  String stateName = "Loading..." ;
-  String cityName = "Loading..." ;
-
-  Future<void> fetchData() async {
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser.uid)
-        .get()
-        .then((doc) {
-      print('Fetching User Data');
-      setState(() {
-           userNameDisplay = doc.data()['username'] ;
-           emailaddress =  doc.data()['useremail'];
-           contactNo =  doc.data()['contact_no']; 
-           graduatingYear  = doc.data()['year'];        
-           cityName =  doc.data()['city']; 
-           stateName = doc.data()['state'];
-            });
-      
-      // print(doc.data()['username']);
-      // print(doc.data()['useremail']);
-
-      // print(userName);
-      // print(inituserImage);
-      // print(userEmail);
-      // print(doc.data()['useremail']);
-      // print(doc.data()['username']);
-      // print(doc.data()['contact_no']);
-      // print(doc.data()['year']);
-    });
-  }
-
-  @override
-  void initState() {
-    // print(FirebaseAuth.instance.currentUser.uid);
-    fetchData();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +77,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 margin: EdgeInsets.only(left: 5.0,right: 5.0),
                 padding: EdgeInsets.all(12.0),
                 width: double.infinity,
-                child: Text(userNameDisplay,style: TextStyle(color: Colors.white),),
+                child: Text(Provider.of<AuthProvider>(context,listen: false).getUserName,style: TextStyle(color: Colors.white),),
                 decoration: BoxDecoration(
                   color: Color(0xFF128C7E),
                   borderRadius: BorderRadius.circular(5.0)
@@ -147,7 +106,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 margin: EdgeInsets.only(left: 5.0,right: 5.0),
                 padding: EdgeInsets.all(12.0),
                 width: double.infinity,
-                child: Text(emailaddress,style: TextStyle(color: Colors.white)),
+                child: Text(Provider.of<AuthProvider>(context,listen: false).getUserEmail,style: TextStyle(color: Colors.white)),
                 decoration: BoxDecoration(
                   color: Color(0xFF128C7E),
                   borderRadius: BorderRadius.circular(5.0)
@@ -176,7 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 margin: EdgeInsets.only(left: 5.0,right: 5.0),
                 padding: EdgeInsets.all(12.0),
                 width: double.infinity,
-                child: Text(graduatingYear,style: TextStyle(color: Colors.white)),
+                child: Text(Provider.of<AuthProvider>(context,listen: false).getUserGradYear,style: TextStyle(color: Colors.white)),
                 decoration: BoxDecoration(
                   color: Color(0xFF128C7E),
                   borderRadius: BorderRadius.circular(5.0)
@@ -205,7 +164,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 margin: EdgeInsets.only(left: 5.0,right: 5.0),
                 padding: EdgeInsets.all(12.0),
                 width: double.infinity,
-                child: Text(contactNo,style: TextStyle(color: Colors.white)),
+                child: Text(Provider.of<AuthProvider>(context,listen: false).getContactNo,style: TextStyle(color: Colors.white)),
                 decoration: BoxDecoration(
                   color: Color(0xFF128C7E),
                   borderRadius: BorderRadius.circular(5.0)
@@ -234,7 +193,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 margin: EdgeInsets.only(left: 5.0,right: 5.0),
                 padding: EdgeInsets.all(12.0),
                 width: double.infinity,
-                child: Text(stateName,style: TextStyle(color: Colors.white)),
+                child: Text(Provider.of<AuthProvider>(context,listen: false).getState,style: TextStyle(color: Colors.white)),
                 decoration: BoxDecoration(
                   color: Color(0xFF128C7E),
                   borderRadius: BorderRadius.circular(5.0)
@@ -263,7 +222,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 margin: EdgeInsets.only(left: 5.0,right: 5.0),
                 padding: EdgeInsets.all(12.0),
                 width: double.infinity,
-                child: Text(cityName,style: TextStyle(color: Colors.white)),
+                child: Text(Provider.of<AuthProvider>(context,listen: false).getCity,style: TextStyle(color: Colors.white)),
                 decoration: BoxDecoration(
                   color: Color(0xFF128C7E),
                   borderRadius: BorderRadius.circular(5.0)
