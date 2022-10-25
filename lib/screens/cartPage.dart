@@ -1,9 +1,9 @@
+import 'package:book_rent_app/providers/authProvider.dart';
 import 'package:book_rent_app/services/cartOperations.dart';
 import 'package:book_rent_app/services/firebaseoperatons.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,27 +16,16 @@ class _CartPageState extends State<CartPage> {
   CollectionReference _collectionReference =
       FirebaseFirestore.instance.collection('users');
 
-  String userName = "";
+  // String userName = "";
 
   @override
   void initState() {
     super.initState();
     Provider.of<CartOperations>(context, listen: false).cartTotal();
-    getUserData();
-  }
-
-  getUserData() async {
-    DocumentSnapshot<Map<String, dynamic>> doc = await _collectionReference
-        .doc(FirebaseAuth.instance.currentUser.uid)
-        .get();
-    userName = doc.data()['username'];
   }
 
   @override
   Widget build(BuildContext context) {
-    var cartInfo = Provider.of<CartOperations>(context, listen: false);
-    // print(cartInfo.getCartAmount());
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -68,9 +57,13 @@ class _CartPageState extends State<CartPage> {
                                     actions: [
                                       MaterialButton(
                                         onPressed: () {
-                                          cartInfo.deleteItem(
-                                              snapshot.data.docs[index].id);
-                                          cartInfo.cartTotal();
+                                          Provider.of<CartOperations>(context,
+                                                  listen: false)
+                                              .deleteItem(
+                                                  snapshot.data.docs[index].id);
+                                          Provider.of<CartOperations>(context,
+                                                  listen: false)
+                                              .cartTotal();
                                           Navigator.pop(context);
                                         },
                                         child: Text('Yes'),
@@ -87,131 +80,80 @@ class _CartPageState extends State<CartPage> {
                                 });
                           },
                           child: Card(
-                            child: Column(
-                              children: [
-                                Container(
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return AlertDialog(
-                                                  content: Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                            .size
-                                                            .width,
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height /
-                                                            2.5,
-                                                    padding:
-                                                        EdgeInsets.all(1.0),
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          color: Colors.black,
-                                                          width: 1),
-                                                      shape: BoxShape.rectangle,
-                                                      color: Colors.black,
-                                                      image: DecorationImage(
-                                                        // fit: BoxFit.cover,
-                                                        image: NetworkImage(
-                                                            snapshot.data
-                                                                    .docs[index]
-                                                                    .data()[
-                                                                'book_img']),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                            );
-                                          },
-                                          child: Container(
-                                            height: 130.0,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.35,
-                                            decoration: BoxDecoration(
-                                                image: DecorationImage(
-                                                    fit: BoxFit.cover,
-                                                    image: NetworkImage(snapshot
-                                                        .data.docs[index]
-                                                        .data()['book_img']))),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(width: 15.0),
-                                      Expanded(
-                                        flex: 2,
-                                        child: Container(
-                                          // color: Colors.lightBlueAccent,
+                            child: Container(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: Container(
+                                      height: 130.0,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.35,
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: NetworkImage(snapshot
+                                                  .data.docs[index]
+                                                  .data()['book_img']))),
+                                    ),
+                                  ),
+                                  SizedBox(width: 15.0),
+                                  Expanded(
+                                    flex: 3,
+                                    child: Container(
+                                      // color: Colors.lightBlueAccent,
 
-                                          child: Column(
-                                            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      child: Column(
+                                        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    snapshot.data.docs[index]
-                                                        .data()['book_name'],
-                                                    style: TextStyle(
-                                                        fontSize: 18.0),
-                                                  ),
-                                                  SizedBox(height: 5.0),
-                                                  Text(
-                                                    snapshot.data.docs[index]
-                                                        .data()['author'],
-                                                    style: TextStyle(
-                                                        fontSize: 14.0),
-                                                  ),
-                                                ],
+                                              Text(
+                                                snapshot.data.docs[index]
+                                                    .data()['book_name'],
+                                                style:
+                                                    TextStyle(fontSize: 18.0),
                                               ),
-                                              SizedBox(
-                                                height: 40.0,
+                                              SizedBox(height: 5.0),
+                                              Text(
+                                                snapshot.data.docs[index]
+                                                    .data()['author'],
+                                                style:
+                                                    TextStyle(fontSize: 14.0),
                                               ),
-                                              Container(
-                                                // color: Colors.blueGrey,
-                                                // width: doub
-                                                // le.infinity,
-                                                child: Row(
-                                                  // mainAxisSize: MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text('Seller :- ' +
-                                                        snapshot
-                                                            .data.docs[index]
-                                                            .data()['seller']),
-                                                    // SizedBox(width: 25.0),
-                                                    Text('Price :- ' +
-                                                        snapshot
-                                                            .data.docs[index]
-                                                            .data()['price']
-                                                            .toString())
-                                                  ],
-                                                ),
-                                              ),
-                                              SizedBox(height: 50.0),
                                             ],
                                           ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ],
+                                          SizedBox(
+                                            height: 40.0,
+                                          ),
+                                          Container(
+                                            child: Row(
+                                              // mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text('Seller :- ' +
+                                                    snapshot.data.docs[index]
+                                                        .data()['seller']),
+                                              ],
+                                            ),
+                                          ),
+                                          Text('Price :- ' +
+                                              snapshot.data.docs[index]
+                                                  .data()['price']
+                                                  .toString())
+                                          // SizedBox(height: 50.0),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         );
@@ -233,48 +175,17 @@ class _CartPageState extends State<CartPage> {
           // Spacer(),
           GestureDetector(
             onTap: () {
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      content: Text('Do you want to place order ? '),
-                      actions: [
-                        MaterialButton(
-                          onPressed: () {
-                            String status = "Processing";
-                            DateTime now = DateTime.now();
-                            String formattedDate = DateFormat('yyyy-MM-dd - kk:mm').format(now);
+              String status = "Processing";
+              DateTime now = DateTime.now();
+              String formattedDate =
+                  DateFormat('yyyy-MM-dd - kk:mm').format(now);
 
-                            print(formattedDate);
-                            Navigator.pop(context);
-                            
+              print(formattedDate);
 
-                            FirebaseOperations()
-                                .addToOrders(userName,formattedDate)
-                                .whenComplete(() {
-                              status = "Success";
-                              Navigator.pop(context);
-                              if (status == "Success") {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      
-                                      backgroundColor: Colors.cyan[400],
-                                        content: Text(
-                                            'Order Placed Successfully. You can check My Orders Page for more info.',style: TextStyle(color: Colors.black),)));
-                              }
-                            }
-                            );
-                          },
-                          child: Text('Yes'),
-                        ),
-                        MaterialButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text('No'),
-                        ),
-                      ],
-                    );
+              FirebaseOperations().addToOrders(
+                  Provider.of<AuthProvider>(context, listen: false).getUserName,
+                  formattedDate).then((value) => {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Order Placed Succesfully"))),     
                   });
             },
             child: Container(
@@ -298,7 +209,8 @@ class _CartPageState extends State<CartPage> {
                 height: 50.0,
               ),
             ),
-          )
+          ),
+          
         ],
       ),
     );
