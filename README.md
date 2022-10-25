@@ -1,6 +1,6 @@
 # book_rent_app
 
-A new Flutter project.
+A new Flutter project created to facilitates user who want to sell a book which is no longer useful to them and for those users who are looking for a particular book.The user who wants to purchase the book can search in available books and can contact with seller who is selling the book.
 
 ![bookImg](https://user-images.githubusercontent.com/62737894/175125898-417dcf3c-b60c-4dfa-aad7-8ab9683dd729.png)
 
