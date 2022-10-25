@@ -1,5 +1,3 @@
-// import 'package:book_cart_app/screens/authentication.dart';
-// import 'package:book_cart_app/screens/loginPage.dart';
 import 'package:book_rent_app/providers/authProvider.dart';
 import 'package:book_rent_app/screens/bottom_nav.dart';
 import 'package:book_rent_app/screens/loginPage.dart';
@@ -22,7 +20,7 @@ class _RegisterPageState extends State<RegisterPage> {
   bool _isLoading = false;
 
   final _formKey = GlobalKey<FormState>();
-  AuthService _authService = AuthService();
+  // AuthService _authService = AuthService();
 
   AuthProvider _authProvider = AuthProvider();
 
