@@ -1,6 +1,3 @@
-// import 'package:book_cart_app/screens/authentication.dart';
-// import 'package:book_cart_app/screens/registerPage.dart';
-import 'package:book_rent_app/models/userModel.dart';
 import 'package:book_rent_app/providers/authProvider.dart';
 import 'package:book_rent_app/screens/bottom_nav.dart';
 import 'package:book_rent_app/screens/registerPage.dart';
