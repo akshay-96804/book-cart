@@ -57,14 +57,23 @@ class _BooksDetailsScreenState extends State<BooksDetailsScreen> {
   }
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     check();
   }
 
-  void check() async{
-    QuerySnapshot _docData = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser.uid).collection('bookmarks').get();
-    
+  void check() async {
+    QuerySnapshot _docData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .collection('bookmarks')
+        .get();
+    for (var ID in _docData.docs) {
+      if (ID.id == widget.docId) {
+        _isbookmarked = true;
+        setState(() {});
+      }
+    }
   }
 
   @override
@@ -82,32 +91,35 @@ class _BooksDetailsScreenState extends State<BooksDetailsScreen> {
                     ? Icon(Icons.bookmark)
                     : Icon(Icons.bookmark_border_outlined),
                 onPressed: () {
-                  FirebaseFirestore.instance
-                      .collection('users')
-                      .doc(FirebaseAuth.instance.currentUser.uid)
-                      .collection('bookmarks')
-                      .doc(widget.docId)
-                      .set({
-                    'book_name': widget.bookName,
-                    'author_name': widget.authorName,
-                    'owner_name': widget.owner,
-                    'bookImg': widget.bookImg,
-                    'description': widget.description,
-                    'owner_uid': widget.ownerUid,
-                    'course_name': widget.courseName,
-                    'branch': widget.branch,
-                    'book_img': widget.bookImg,
-                    'year': widget.year,
-                    'owner': widget.owner,
-                    'docId': widget.docId,
-                    'price': widget.price
-                  }).then((value) {
-                    setState(() {
-                      _isbookmarked = true;
-                    });
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("Sucessfully BookMarked")));
-                  });
+                  _isbookmarked
+                      ? ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Already BookMarked")))
+                      : FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(FirebaseAuth.instance.currentUser.uid)
+                          .collection('bookmarks')
+                          .doc(widget.docId)
+                          .set({
+                          'book_name': widget.bookName,
+                          'author_name': widget.authorName,
+                          'owner_name': widget.owner,
+                          'bookImg': widget.bookImg,
+                          'description': widget.description,
+                          'owner_uid': widget.ownerUid,
+                          'course_name': widget.courseName,
+                          'branch': widget.branch,
+                          'book_img': widget.bookImg,
+                          'year': widget.year,
+                          'owner': widget.owner,
+                          'docId': widget.docId,
+                          'price': widget.price
+                        }).then((value) {
+                          setState(() {
+                            _isbookmarked = true;
+                          });
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text("Sucessfully BookMarked")));
+                        });
                 })
           ]),
       body: ListView(
@@ -220,6 +232,16 @@ class _BooksDetailsScreenState extends State<BooksDetailsScreen> {
                       color: Colors.cyanAccent[100]),
                   child: Text(widget.description),
                 ),
+                SizedBox(height: 12.0),
+                Text('Price', style: TextStyle(fontWeight: FontWeight.bold)),
+                Container(
+                  padding: EdgeInsets.all(10.0),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12.0),
+                      color: Colors.cyanAccent[100]),
+                  child: Text('Rs. ${widget.price.toString()}'),
+                ),
               ],
             ),
           ),
@@ -263,11 +285,11 @@ class _BooksDetailsScreenState extends State<BooksDetailsScreen> {
                       type: PageTransitionType.rightToLeft));
             },
             child: Container(
-              padding: EdgeInsets.all(12.0),
+              padding: EdgeInsets.all(15.0),
               decoration: BoxDecoration(color: Colors.redAccent),
               alignment: Alignment.center,
               width: double.infinity * 0.15,
-              margin: EdgeInsets.symmetric(horizontal: 8.0),
+              margin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
               child: Text('Contact Seller'),
             ),
           )
@@ -275,7 +297,6 @@ class _BooksDetailsScreenState extends State<BooksDetailsScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-
           showDialog(
               context: _scaffoldKey.currentContext,
               builder: (dialogContext) {
@@ -299,8 +320,8 @@ class _BooksDetailsScreenState extends State<BooksDetailsScreen> {
                             .whenComplete(() {
                           Navigator.pop(dialogContext);
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content:
-                                    Text('Item added To Cart Successfully.')));
+                              content:
+                                  Text('Item added To Cart Successfully.')));
                         });
                       },
                       child: Text('Yes'),
