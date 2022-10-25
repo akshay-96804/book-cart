@@ -5,7 +5,6 @@ import 'package:book_rent_app/screens/bottom_nav.dart';
 import 'package:book_rent_app/screens/cartPage.dart';
 import 'package:book_rent_app/screens/landingPage.dart';
 import 'package:book_rent_app/screens/loginPage.dart';
-import 'package:book_rent_app/screens/myhomeScreen.dart';
 import 'package:book_rent_app/screens/orderPlaced.dart';
 import 'package:book_rent_app/services/cartOperations.dart';
 import 'package:book_rent_app/services/orderManage.dart';
@@ -56,10 +55,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           child: CartPage(),
           create: (_)=>CartOperations(),
-        ),
-        ChangeNotifierProvider(
-          child: PlacedOrderScreen(),
-          create: (_)=> OrderManage(),
         ),
         ChangeNotifierProvider(
           child: BottomNavScreen(),
