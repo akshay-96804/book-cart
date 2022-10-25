@@ -130,4 +130,12 @@ class AuthProvider extends ChangeNotifier {
       'city': city
     });
   }
+
+  Future<void> signOut() async {
+    try {
+      return await _firebaseAuth.signOut();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 }
