@@ -1,11 +1,11 @@
 import 'package:book_rent_app/screens/addBookScreen.dart';
-import 'package:book_rent_app/screens/chatScreen.dart';
-import 'package:book_rent_app/screens/demo_screen.dart';
+import 'package:book_rent_app/screens/categoriesScreen.dart';
+// import 'package:book_rent_app/screens/chatScreen.dart';
+import 'package:book_rent_app/screens/books_screen.dart';
 // import 'package:book_rent_app/screens/homeScreen.dart';
 import 'package:book_rent_app/screens/loginPage.dart';
 import 'package:book_rent_app/screens/messageRoom.dart';
 import 'package:book_rent_app/screens/myBooksScreen.dart';
-import 'package:book_rent_app/screens/myhomeScreen.dart';
 import 'package:book_rent_app/screens/profileScreen.dart';
 import 'package:book_rent_app/services/auth.dart';
 import 'package:book_rent_app/widgets/drawerView.dart';
@@ -24,8 +24,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
   int _selectedIndex = 0;
 
   List<Map<String, dynamic>> _pages = [
-    // {'page': DemoHomePage(), 'title': 'Home'},
-    {'page': HomePageScreen(), 'title': 'Home'},
+    {'page': CategoriesScreen(), 'title': 'Home'},
     {'page': MyBookScreen(), 'title': 'My Books'},
     {'page': AddBookScreen(), 'title': 'Add A Book !!'},
     {'page': allChatsScreen(), 'title': 'Chats'},
