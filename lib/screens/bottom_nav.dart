@@ -1,3 +1,4 @@
+import 'package:book_rent_app/providers/authProvider.dart';
 import 'package:book_rent_app/screens/addBookScreen.dart';
 import 'package:book_rent_app/screens/categoriesScreen.dart';
 // import 'package:book_rent_app/screens/chatScreen.dart';
@@ -12,6 +13,7 @@ import 'package:book_rent_app/widgets/drawerView.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BottomNavScreen extends StatefulWidget {
   // const BottomNavScreen({ Key? key }) : super(key: key);
@@ -44,7 +46,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
           IconButton(
               icon: Icon(Icons.logout),
               onPressed: () {
-                AuthService().signOut();
+                Provider.of<AuthProvider>(context,listen: false).signOut();
                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (_){
                   return LoginPage(); 
                 }));
