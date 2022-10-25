@@ -4,10 +4,7 @@ import 'package:book_rent_app/providers/authProvider.dart';
 import 'package:book_rent_app/screens/bottom_nav.dart';
 import 'package:book_rent_app/screens/cartPage.dart';
 import 'package:book_rent_app/screens/landingPage.dart';
-import 'package:book_rent_app/screens/loginPage.dart';
-import 'package:book_rent_app/screens/orderPlaced.dart';
 import 'package:book_rent_app/services/cartOperations.dart';
-import 'package:book_rent_app/services/orderManage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -49,7 +46,7 @@ class MyApp extends StatelessWidget {
         ),
     textTheme: GoogleFonts.latoTextTheme(),
   ),
-      home: LandingPage(),
+      home: Wrapper(),
     ),
       providers: [
         ChangeNotifierProvider(
@@ -62,5 +59,15 @@ class MyApp extends StatelessWidget {
         ),
       ]
     );
+  }
+}
+
+
+class Wrapper extends StatelessWidget {
+  // const Wrapper({ Key? key }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Provider.of<AuthProvider>(context).getCurruser!=null?BottomNavScreen():LandingPage();
   }
 }
