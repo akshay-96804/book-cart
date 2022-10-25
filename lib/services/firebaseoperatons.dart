@@ -34,11 +34,6 @@ class FirebaseOperations {
         .collection('myCart')
         .get();
 
-    DocumentReference _orderPlacedRef = _collectionReference
-        .doc(FirebaseAuth.instance.currentUser.uid)
-        .collection('ordersPlaced')
-        .doc();
-
     List<Map<String, dynamic>> allOrders = [];
     int orderTotal = 0;   
     int totalAmount = 0 ;
@@ -49,7 +44,6 @@ class FirebaseOperations {
       allOrders.add(query.docs[i].data());
       totalAmount+= query.docs[i].data()['price'];
 
-      orderTotal = totalAmount ;
 
       Map<String, dynamic> recdOrderData = {
         'date' : orderDate,
@@ -73,15 +67,22 @@ class FirebaseOperations {
           .collection('myCart')
           .doc(query.docs[i].id)
           .delete();
-
-      // FirebaseFirestore.instance.collection('users').doc(sellerId).collection('orderReceived').doc().set({});
-      // _orderPlacedRef.collection('orderDetails').add(query.docs[i].data());
     }
+
+          orderTotal = totalAmount ;
+
+
+       DocumentReference _orderPlacedRef = _collectionReference
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .collection('ordersPlaced')
+        .doc();
 
     _orderPlacedRef.set({
       'orderList': allOrders,
       'totalAmount' : orderTotal
       });
+
+    
 
     // _orderPlacedRef.set({'totalAmount' : orderTotal});
   }
