@@ -29,7 +29,6 @@ class _OrderScreenState extends State<OrderScreen> {
           children: [
             PlacedOrderScreen(),
             OrderRecievedScreen()
-            // RecievedOrderScreen()
           ],
         ),
       ));
