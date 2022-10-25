@@ -8,31 +8,13 @@ class OrderRecievedScreen extends StatefulWidget {
 }
 
 class _OrderRecievedScreenState extends State<OrderRecievedScreen> {
-  @override
-  void initState() {
-    super.initState();
-    // getOrderTotal();
-  }
-
+  
   int totalAmount = 0 ;
 
   CollectionReference _collectionReference = FirebaseFirestore.instance
       .collection('users')
       .doc(FirebaseAuth.instance.currentUser.uid)
       .collection('orderRecieved');
-
-  // getOrderTotal() async {
-  //   QuerySnapshot<Map<String, dynamic>> querySnapshot =
-  //       await _collectionReference.get();
-  //   int orderTotal = 0;
-
-  //   querySnapshot.docs.forEach((element) {
-  //     orderTotal += element.data()['price'];
-  //   });
-
-  //   totalAmount = orderTotal ;
-  //   print(totalAmount);
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -88,13 +70,7 @@ class _OrderRecievedScreenState extends State<OrderRecievedScreen> {
                                         SizedBox(
                                           height: 35.0,
                                         ),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            IconButton(icon: Icon(Icons.call), onPressed: (){}),
-                                            IconButton(icon: Icon(Icons.location_on), onPressed: (){})
-                                          ],
-                                        )
+                                        
                                       ],
                                     ),
                                   )

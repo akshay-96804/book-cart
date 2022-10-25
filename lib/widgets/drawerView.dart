@@ -1,6 +1,5 @@
 import 'package:book_rent_app/screens/bookmark_screen.dart';
 import 'package:book_rent_app/screens/cartPage.dart';
-// import 'package:book_rent_app/screens/homeScreen.dart';
 import 'package:book_rent_app/screens/ordersScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -77,24 +76,7 @@ class DrawerView extends StatelessWidget {
               
             },
           ),
-          new Divider(
-              color: Colors.greenAccent,
-              height: 2.0,
-            ),
-          buildList(
-            'Notifications',
-            Icons.notifications,
-            () {
-              // Navigator.pop(context);
-              // Navigator.of(context).push(
-              //   MaterialPageRoute(
-              //     builder: (_) {
-              //       return Notifications();
-              //     },
-              //   ),
-              // );
-            },
-          ),
+          
           new Divider(
               color: Colors.greenAccent,
               height: 2.0,
@@ -151,136 +133,9 @@ class DrawerView extends StatelessWidget {
               );
             },
           ),
-          new Divider(
-              color: Colors.greenAccent,
-              height: 3.0,
-            ),
-          buildList(
-            'Contact Us',
-            Icons.contact_mail,
-            () {
-              // Navigator.pop(context);
-              // Navigator.of(context).push(
-              //   MaterialPageRoute(
-              //     builder: (_) {
-              //       return ContactPage();
-              //     },
-              //   ),
-              // );
-            },
-          ),
-          new Divider(
-              color: Colors.greenAccent,
-              height: 2.0,
-            ),
-          buildList(
-            'FAQs',
-            Icons.question_answer,
-            () {
-              // Navigator.pop(context);
-              // Navigator.of(context).push(
-              //   MaterialPageRoute(
-              //     builder: (_) {
-              //       return FAQPage();
-              //     },
-              //   ),
-              // );
-            },
-          ),
-          new Divider(
-              color: Colors.greenAccent,
-              height: 2.0,
-            ),
-          buildList(
-            'About App',
-            Icons.library_books,
-            () {
-              // Navigator.pop(context);
-              // Navigator.of(context).push(
-              //   MaterialPageRoute(
-              //     builder: (_) {
-              //       return AboutPage();
-              //     },
-              //   ),
-              // );
-            },
-          ),
-           new Divider(
-              color: Colors.greenAccent,
-              height: 2.0,
-            ),
-          buildList(
-            'Settings',
-            Icons.settings,
-            () {
-              // Navigator.pop(context);
-              // Navigator.of(context).push(
-              //   MaterialPageRoute(
-              //     builder: (_) {
-              //       return SettingsPage();
-              //     },
-              //   ),
-              // );
-            },
-          ),
-          new Divider(
-              color: Colors.greenAccent,
-              height: 2.0,
-            ),
+          
         ],
       );
   }
 }
 
-/*
-ListView(
-      children: [
-        UserAccountsDrawerHeader(
-          currentAccountPicture: FlutterLogo(),
-          accountEmail: Text('Username'),
-          accountName: Text('Email'),
-        ),
-        ListTile(
-          
-          onTap: (){},
-                        leading: Icon(Icons.home), title: Text("Home"),  
-
-        ),
-        ListTile(
-           onTap: (){},
-                        leading: Icon(Icons.notifications,color: Colors.black,), title: Text("Notifications"),  
-
-        ),
-        ListTile(
-           onTap: (){},
-                        leading: Icon(Icons.person), title: Text("Profile"),  
-
-        ),
-        ListTile(
-           onTap: (){},
-                        leading: Icon(Icons.contact_mail), title: Text("Contact Us"),  
-
-        ),
-        ListTile(
-           onTap: (){},
-                        leading: Icon(Icons.question_answer), title: Text("FAQs"),  
-
-        ),
-        ListTile(
-           onTap: (){},
-                        leading: Icon(Icons.info), title: Text("About App"),  
-
-        ),
-        ListTile(
-           onTap: (){},
-                        leading: Icon(Icons.settings), title: Text("Settings"),  
-
-        ),
-        ListTile(
-           onTap: (){},
-                        leading: Icon(Icons.logout), title: Text("Log Out"),  
-
-        ),
-      ],
-    );
-*/
