@@ -44,6 +44,10 @@ class AuthProvider extends ChangeNotifier {
     return userGradYear;
   }
 
+  User get getCurruser{
+    return FirebaseAuth.instance.currentUser;
+  }
+
   Future<String> createUser(String email, String password) async {
     String errorMessage;
 
@@ -133,7 +137,8 @@ class AuthProvider extends ChangeNotifier {
 
   Future<void> signOut() async {
     try {
-      return await _firebaseAuth.signOut();
+      await _firebaseAuth.signOut();
+      notifyListeners();
     } catch (e) {
       print(e.toString());
     }

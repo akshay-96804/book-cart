@@ -47,9 +47,9 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
               icon: Icon(Icons.logout),
               onPressed: () {
                 Provider.of<AuthProvider>(context,listen: false).signOut();
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_){
-                  return LoginPage(); 
-                }));
+                // Navigator.pushReplacement(context, MaterialPageRoute(builder: (_){
+                //   return LoginPage(); 
+                // }));
               })
         ],
       ),
