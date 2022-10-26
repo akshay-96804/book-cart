@@ -119,20 +119,7 @@ class bookTiles extends StatelessWidget {
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(width: 5.0),
-                IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return EditBookScreen(
-                          author: authorName,
-                          book: title,
-                          course: courseName,
-                          docId: docId,
-                          price: price,
-                        );
-                      }));
-                    }),
+                
                 IconButton(
                     icon: Icon(Icons.delete),
                     onPressed: () {

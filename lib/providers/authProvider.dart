@@ -44,7 +44,9 @@ class AuthProvider extends ChangeNotifier {
   }
 
   User get getCurruser{
+    if(FirebaseAuth.instance.currentUser==null) return null ;
     userId = FirebaseAuth.instance.currentUser.uid ;
+    
     return FirebaseAuth.instance.currentUser;
   }
 

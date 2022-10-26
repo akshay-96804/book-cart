@@ -167,7 +167,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
   List<String> allCategories = [
     'dummy-data',
     'Programming',
-    'Course-Book'
+    'Course-Book',
         'Novel',
     'BioGraphy'
   ];
