@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 // import 'package:provider/provider.dart';
 
@@ -45,6 +44,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   User get getCurruser{
+    userId = FirebaseAuth.instance.currentUser.uid ;
     return FirebaseAuth.instance.currentUser;
   }
 

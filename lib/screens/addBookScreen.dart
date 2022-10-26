@@ -168,7 +168,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
     'dummy-data',
     'Programming',
     'Course-Book'
-    'Novel',
+        'Novel',
     'BioGraphy'
   ];
 
@@ -177,16 +177,11 @@ class _AddBookScreenState extends State<AddBookScreen> {
   Reference storageReference = FirebaseStorage.instance.ref();
 
   PickedFile _image;
-  // XFile _imageFile ;
   File _imgFile;
 
   void _getImage() async {
     final _pickedFile =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-    // print("Path is ${_imageFile.path}");
-
-    // PickedFile selectedFile = await ImagePicker().getImage(source: ImageSource.gallery);
-    // _imageFile = File(selectedFile.path);
 
     if (_pickedFile != null) {
       setState(() {
@@ -216,32 +211,21 @@ class _AddBookScreenState extends State<AddBookScreen> {
 
   CrudMethods _crudMethods = CrudMethods();
 
-  Future<void> fetchData() async {
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(Provider.of<AuthProvider>(context,listen: false).getUserId)
-        .get()
-        .then((doc) {
-      print('Fetching User Data');
-
-      // setState(() {
-      //   username = doc.data()['username'];
-      //   email = doc.data()['useremail'];
-      //   userUid = FirebaseAuth.instance.currentUser.uid ;
-      // });
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    fetchData();
-  }
-
   void _addBook() async {
     await _crudMethods
-        .addBooks(Provider.of<AuthProvider>(context,listen: false).getUserId,Provider.of<AuthProvider>(context,listen: false).getUserName, Provider.of<AuthProvider>(context,listen: false).getUserEmail, bookImage, branch, bookName.text,
-            courseName.text, authorName.text, bookDesc.text,category,appYear,_price)
+        .addBooks(
+            Provider.of<AuthProvider>(context, listen: false).getUserId,
+            Provider.of<AuthProvider>(context, listen: false).getUserName,
+            Provider.of<AuthProvider>(context, listen: false).getUserEmail,
+            bookImage,
+            branch,
+            bookName.text,
+            courseName.text,
+            authorName.text,
+            bookDesc.text,
+            category,
+            appYear,
+            _price)
         .whenComplete(() {
       bookImage = defaultBookImage;
       imageStatus = "";
@@ -249,7 +233,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
       authorName.clear();
       courseName.clear();
       bookDesc.clear();
-      _price = 0 ;
+      _price = 0;
       _selectedYear = 0;
       _selectedBranch = 0;
       _selectedCategory = 0;
@@ -391,6 +375,8 @@ class _AddBookScreenState extends State<AddBookScreen> {
                         ),
                         SizedBox(height: 10.0),
                         DropdownButtonFormField(
+                            validator: (value) =>
+                                value == 0 ? 'Select Category' : null,
                             value: _selectedCategory,
                             onChanged: (val) {
                               // print(val);
@@ -401,10 +387,11 @@ class _AddBookScreenState extends State<AddBookScreen> {
 
                               // print(category);
                             },
-                            items: bookCategories
-                            ),
+                            items: bookCategories),
                         SizedBox(height: 10.0),
                         DropdownButtonFormField(
+                            validator: (value) =>
+                                value == 0 ? 'Select Year ' : null,
                             value: _selectedYear,
                             onChanged: (val) {
                               // print(val);
@@ -417,6 +404,8 @@ class _AddBookScreenState extends State<AddBookScreen> {
                             items: yearList),
                         SizedBox(height: 10.0),
                         DropdownButtonFormField(
+                            validator: (value) =>
+                                value == 0 ? 'Select Branch ' : null,
                             value: _selectedBranch,
                             onChanged: (val) {
                               setState(() {
@@ -425,45 +414,25 @@ class _AddBookScreenState extends State<AddBookScreen> {
                               });
                             },
                             items: branches),
-                        SizedBox(height: 10.0),
-                        ListTile(
-                          title: Text('For Sale'),
-                          leading: Radio(
-                            value: BookStatus.ForSale,
-                            groupValue: _status,
-                            onChanged: (BookStatus value) {
-                              setState(() {
-                                _status = value;
-                              });
-                            },
-                          ),
-                        ),
-                        SizedBox(height: 10.0),
-                        ListTile(
-                          title: Text('For Rent'),
-                          leading: Radio(
-                            value: BookStatus.ForRent,
-                            groupValue: _status,
-                            onChanged: (BookStatus value) {
-                              setState(() {
-                                _status = value;
-                              });
-                            },
-                          ),
-                        ),
+                        
                         SizedBox(height: 10.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Set Price',style: TextStyle(fontSize: 18.0,fontWeight: FontWeight.bold)),
-                                                    Text('Price is    Rs. ${_price.toString()}',style: TextStyle(fontSize: 18.0,fontWeight: FontWeight.bold)),
-
+                            Text('Set Price',
+                                style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold)),
+                            Text('Price is    Rs. ${_price.toString()}',
+                                style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold)),
                           ],
                         ),
+                        SizedBox(height: 25.0),
                         Slider(
-
-                          label: '${_price.round()}',
-                          divisions: 40,
+                            label: '${_price.round()}',
+                            divisions: 40,
                             min: 0.0,
                             max: 2000.0,
                             value: _price,
@@ -480,7 +449,12 @@ class _AddBookScreenState extends State<AddBookScreen> {
                             )),
                         GestureDetector(
                           onTap: () {
-                            if (_formKey.currentState.validate() &&
+                            if(_price == 0){
+                              setState(() {
+                                alert = "Please Set a price";
+                              }); 
+                            }
+                            else if (_formKey.currentState.validate() &&
                                 bookImage != defaultBookImage) {
                               setState(() {
                                 _uploading = true;

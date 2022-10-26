@@ -5,7 +5,8 @@ class EditBookScreen extends StatefulWidget {
   // const EditBookScreen({ Key? key }) : super(key: key);
 
   String author,book,course,docId;
-  EditBookScreen({this.author,this.book,this.course,this.docId});
+  int price;
+  EditBookScreen({this.author,this.book,this.course,this.docId,this.price});
 
   @override
   _EditBookScreenState createState() => _EditBookScreenState();
@@ -18,6 +19,7 @@ class _EditBookScreenState extends State<EditBookScreen> {
   String updatedBook ; 
   String updatedAuthor ; 
   String updatedCourse ;
+  String updatedPrice ;
 
   @override
   void initState() {
@@ -27,12 +29,14 @@ class _EditBookScreenState extends State<EditBookScreen> {
         updatedBook = doc['book_name'] ;
         updatedAuthor = doc['author_name'];
         updatedCourse = doc['course_name'] ;
+        updatedPrice = doc['price'];
     } );
   }
 
   TextEditingController bookName = TextEditingController();
   TextEditingController authorName = TextEditingController();
   TextEditingController courseName = TextEditingController();
+  TextEditingController price = TextEditingController();
 
  
 
@@ -42,7 +46,8 @@ class _EditBookScreenState extends State<EditBookScreen> {
     await _collectionReference.doc(widget.docId).update({
       'book_name' : updatedBook,
       'author_name' :updatedAuthor,
-      'course_name' : updatedCourse
+      'course_name' : updatedCourse,
+      'price':int.parse(updatedPrice)
     }).whenComplete((){
       print("Update Successfully Done");
       Navigator.pop(context);
@@ -101,6 +106,24 @@ class _EditBookScreenState extends State<EditBookScreen> {
                     // controller: authorName,
                     onChanged: (val){
                       updatedAuthor = val ;
+                    },
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        hintText: 'Edit Author Name'),
+                    validator: (input) =>
+                        (input.trim().length == 0 || input.trim().length > 40)
+                            ? 'Name should be less than or equal to 40 characters'
+                            : null,
+                  ),
+                                    SizedBox(height: 20.0),
+
+                  TextFormField(
+                    initialValue: 'Rs '+widget.price.toString(),
+                    // controller: authorName,
+                    onChanged: (val){
+                      updatedPrice = val ;
                     },
                     decoration: InputDecoration(
                         border: OutlineInputBorder(

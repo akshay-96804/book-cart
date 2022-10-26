@@ -76,8 +76,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                     child: CircularProgressIndicator()
                   );
                 }
-               if(snapshot.hasData){
-                    // print("We have books");
+               if(snapshot.data.size > 0){
                     return ListView.builder(              
                scrollDirection: Axis.horizontal,
               //  itemCount: 2,
@@ -95,9 +94,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 // child: Text(snapshot.data.docs[index].data()['book_name']),
               ),
             );
-          });
+          }); 
              }
-             return SizedBox(); 
+             return Center(
+              child: Text("Currently we do not have any collection."),
+             ); 
               }
             )
       ),
